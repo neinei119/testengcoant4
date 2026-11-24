@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Speaking Practice</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap');
+
+:root{
+  --bg:#f7f5f2;
+  --surface:#ffffff;
+  --surface-soft:#fbf9f7;
+  --text:#34333b;
+  --muted:#85818d;
+  --primary:#a99acb;
+  --primary-dark:#8172a8;
+  --primary-soft:#eee9f6;
+  --sage:#dce9df;
+  --peach:#f5e2d8;
+  --yellow:#f5edcf;
+  --border:#ebe7e4;
+  --success:#729b82;
+  --danger:#c77c7c;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at 8% 4%,rgba(220,233,223,.58),transparent 32%),
+    radial-gradient(ellipse at 94% 12%,rgba(238,233,246,.75),transparent 34%),
+    var(--bg);
+  color:var(--text);
+  font:15px/1.7 'Be Vietnam Pro','Nunito',system-ui,sans-serif;
+  padding:38px 22px 52px;
+}
+.w{max-width:850px;margin:0 auto}
+header{margin:0 0 26px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--primary-dark);background:var(--primary-soft);
+  border-radius:999px;padding:6px 13px;
+  font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+}
+h1{
+  font-family:'Nunito','Be Vietnam Pro',sans-serif;
+  font-size:clamp(28px,4vw,36px);line-height:1.2;
+  letter-spacing:-.7px;margin:14px 0 7px;font-weight:800;
+}
+.subtitle{color:var(--muted);font-size:14px;margin:0}
+.tabs{display:flex;gap:10px;margin:26px 0 16px}
+button{
+  font:600 13px 'Be Vietnam Pro',sans-serif;
+  padding:11px 17px;border-radius:12px;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);cursor:pointer;transition:.18s ease;
+}
+button:hover:not(:disabled){transform:translateY(-1px);border-color:#cfc5df}
+button:focus-visible{outline:3px solid #dcd3ec;outline-offset:2px}
+button.on,button.p{
+  background:var(--primary);color:white;border-color:var(--primary);
+  box-shadow:0 5px 14px rgba(129,114,168,.16);
+}
+button:disabled{opacity:.42;cursor:not-allowed}
+.tabs button{min-width:150px}
+.card{
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--border);border-radius:20px;
+  padding:24px;margin-bottom:16px;
+  box-shadow:0 10px 30px rgba(65,55,75,.045);
+}
+#qc{min-height:150px;display:flex;flex-direction:column;justify-content:center}
+.tag{
+  display:inline-block;align-self:flex-start;
+  color:var(--primary-dark);background:var(--primary-soft);
+  font-size:11px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;border-radius:8px;padding:5px 10px;margin-bottom:10px;
+}
+.q{font-size:17px;font-weight:600;line-height:1.65;margin:7px 0}
+.q + .q{padding-top:8px;border-top:1px solid #f0edf0}
+.timer-card{text-align:center;padding:25px 24px 22px}
+.timer-label{font-size:11px;font-weight:800;letter-spacing:.13em;color:var(--muted);text-transform:uppercase}
+.t{
+  font-family:'Nunito',sans-serif;font-size:clamp(58px,10vw,76px);
+  line-height:1.2;font-weight:800;letter-spacing:2px;
+  color:var(--primary-dark);font-variant-numeric:tabular-nums;margin:5px 0 18px;
+}
+.t.low{color:var(--danger)}
+.row{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+.row button{min-width:122px}
+.voice-note{font-size:12px;color:var(--muted);margin:12px 0 0}
+.voice-controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.voice-controls button{font-size:12px;padding:8px 13px}
+#st{min-height:20px;margin:14px 0 0;color:var(--muted);font-size:12px}
+.ans{border-left:3px solid var(--success);padding:3px 0 3px 16px;margin:18px 0}
+.ans b{display:block;font-size:15px;margin-bottom:8px}
+.ans p{margin:8px 0;color:#55515b;font-size:14px;line-height:1.8}
+#ac .card{margin-top:16px}
+#ac .tag{background:var(--sage);color:#587765}
+@media(max-width:600px){
+  body{padding:24px 14px 36px}
+  .card{padding:19px;border-radius:16px}
+  .tabs button{min-width:0;flex:1;padding:10px 8px;font-size:12px}
+  .row button{flex:1;min-width:105px}
+  .q{font-size:15px}
+}
+</style>
+</head>
+<body>
+<div class="w">
+<header><span class="eyebrow">IELTS · Practice space</span><h1>Speaking Practice</h1><p class="subtitle">Build confidence, one answer at a time.</p></header>
+<div class="tabs"><button id="b1" class="on">Part 1 · 1 phút</button><button id="b2">Part 2 · 2 phút</button></div>
+<div class="card" id="qc"><div class="hint">Your question will appear here.</div></div>
+<div class="card timer-card"><div class="timer-label">Time remaining</div><div class="t" id="tm">01:00</div>
+<div class="row"><button class="p" id="rnd">Random question</button><button id="go" disabled>Start</button><button id="ans" disabled>Sample answer</button></div>
+<div class="voice-controls"><button id="replay" disabled>🔊 Listen again</button><button id="stopVoice" disabled>Stop voice</button></div>
+<p class="voice-note">English voice · The question is read automatically after random selection.</p>
+<p id="st"></p></div>
+<div id="ac"></div>
+</div>
+<script>
+const D1=[
+{t:"About you",q:[["What’s your full name?","My full name is Nguyen Thi Hien, and most people just call me Hien. At home, my family usually calls me “út” because I’m the youngest daughter in a family of three children."],["Does your name have any special meaning?","Yes, absolutely. My first name, Hien, is not common in Vietnam. It is associated with strength and confidence. I really like this meaning because it reflects the kind of person I want to become. It also reminds me to be confident and stay true to myself."]]},
+{t:"Study",q:[["What’s your major?","I’m majoring in International Business. Personally, I chose this major because I’ve always been curious about how businesses operate across different markets. I’m also interested in pursuing a career in business development, so I believe this major will give me a solid foundation for my future career."],["What do you find most interesting about your course?","What I find most interesting is that I get to learn how businesses work in both local and international markets. I also learn how companies work with foreign partners and deal with different business situations. I think these things are really useful for my future career."]]},
+{t:"Work",q:[["Can you describe one of your typical working days?","Well, my daily routine depends on my university schedule. I usually spend my mornings and afternoons either attending classes or studying with my friend at Smart Space at my university. Since my timetable changes quite often, I have to be flexible with my plans. In the evening, I usually take some time to relax, either by going out with friends or doing something I enjoy."],["What is your ideal job?","My ideal job would be working as a Business Development Executive. I’m interested in this position because I can build relationships with clients, learn about different business cultures and find new opportunities for business growth. I also think it would help me develop my communication and negotiation skills."]]},
+{t:"Free time",q:[["What do you enjoy doing in your free time?","I enjoy doing quite a few things, but I particularly like watching modern Chinese dramas because they’re a great way to relax after a busy day. I also enjoy designing. At the moment, I’m learning web design because I want to improve my creative skills and learn how to build my own website."],["Is there any other hobby or sport you would like to try? Why?","Yes, I’d really love to learn how to play the violin. I’ve never played a musical instrument before, but I’ve always loved its beautiful and emotional sound. I think playing the violin would be a nice way to relax and express myself. It would also help me become more patient and disciplined."]]}
+];
+const D2=[
+{t:"Corporate Culture",q:[
+["How important is it to find out about the culture of a company before you work there?",`I think it’s really important to know about the culture of the company before working there because company culture can have a huge impact on how comfortable and motivated employees feel at work.
+The main reason is that everyone has different working styles and personalities. For example, some businesses have a very formal environment with strict rules and fixed schedules, while others are more flexible and encourage employees to share their opinions. Personally, I’d prefer an open working environment where I can communicate freely and exchange ideas with my colleagues.
+Another reason is that knowing about a company’s culture beforehand can help people adapt more easily when they start working there. They’ll already have an idea of how people communicate, cooperate and deal with problems. For example, job seekers can read employee reviews or talk to experienced employees to get a better understanding of the workplace.
+To be honest, I believe that company culture is just as important as salary because it affects your everyday working experience.`],
+["What are the similarities and differences between training and development?",`I think training and development are quite similar because they both aim to improve employees’ abilities and help them perform better at work. However, they also have different focuses.
+The main difference is that training is usually more practical and related to an employee’s current position. For example, when a company hires new employees, it may organise training sessions to teach them how to use internal software, communicate with customers or complete specific tasks.
+Development, on the other hand, concentrates more on long-term career growth. It helps employees prepare for future responsibilities and opportunities. For instance, someone who wants to become a manager might join a leadership programme or receive guidance from an experienced colleague.
+I think both are necessary because they serve different purposes. Training helps employees do their current jobs more effectively, while development prepares them for future career opportunities. So, in simple terms, training targets on the present, while development focuses more on the future.`],
+["Should companies focus more on developing new employees?",`Yes, definitely. I think companies should pay special attention to new employees, particularly during their first few months.
+The main reason is that starting a new job can be quite challenging. New employees may have theoretical knowledge, but they don’t always have enough practical experience. They also need time to understand the company’s rules, working procedures and expectations. For example, a new employee in a marketing department might need guidance on conducting market research, preparing reports and communicating with clients. Without proper support, they could easily feel overwhelmed or make unnecessary mistakes.
+Another reason is that investing in new employees can benefit companies in the long run. When people receive proper training and feel supported, they’re more likely to become confident and develop a sense of belonging. As a result, they may be more willing to stay with the company.
+Personally, I think supporting new employees from the beginning is a valuable investment, as it helps both employees and the company grow in the long term.`]]},
+{t:"Finance",q:[
+["Do you have any tips for saving money?",`Yes, definitely. I think the most important thing is to develop good spending habits, especially for students who usually have a limited budget.
+One useful tip is to keep track of daily expenses. People can use a budgeting app such as Momo, which I’m currently using, or a simple spreadsheet to record how much they spend on food, transport and entertainment. This helps them understand where their money actually goes. Sometimes, small expenses may not seem important, but they can add up quite quickly.
+Another thing I’d recommend is making a shopping list before buying anything. Personally, I sometimes have an urge to buy things just because they’re on sale or look attractive, even when I don’t really need them. Therefore, having a list can help me avoid unplanned purchases.
+I also think it’s a good idea to save a small amount of money whenever you receive your allowance rather than waiting until the end of the month.
+Personally, I believe that saving doesn’t mean giving up everything you enjoy. It’s more about spending wisely and building healthy financial habits.`],
+["How is the economy doing in your country at the moment?",`I’d say Vietnam’s economy is doing quite well overall, although there are still some challenges.
+One positive sign is that the country has experienced strong economic growth, supported by manufacturing, exports and foreign investment. These sectors play an important role in creating jobs and attracting international businesses.
+However, I don’t think everything is going smoothly. One major concern is the rising cost of living, which can put pressure on households, especially for people with lower incomes. And Vietnamese businesses also have to deal with international competition and uncertainty in the global market. For example, companies that depend heavily on exports may face difficulties when demand from overseas markets decreases.
+Personally, I think the country has a lot of potential if it continues to attract investment, improve infrastructure and support local businesses.`],
+["When there is a financial crisis, what are the effects on economic growth, investment and employment?",`I think a financial crisis can have a serious impact on an economy, especially when businesses and consumers start facing financial difficulties.
+First of all, economic growth may slow down because people tend to spend less when they’re worried about their financial situation. As a result, businesses may experience lower sales and reduced revenue.
+This also affects investment. When the economy becomes unstable, companies are usually more prudent about spending money or expanding their businesses. For example, a company planning to open several new branches may decide to delay the project until the situation improves.
+Another major effect is on employment. Businesses that struggle financially may stop hiring new staff or lay off employees to reduce costs. And this can lead to higher unemployment and lower household incomes.
+Overall, a financial crisis can negatively affect the whole economy and people’s lives. That’s why I believe governments should support businesses and protect workers.`]]},
+{t:"Digital Business",q:[
+["Talk about an app that can change your life.",`I’d like to talk about Notion, a productivity app that has made a real difference in the way I organise my study and personal life.
+What I particularly like about Notion is that it allows me to organise almost everything in one place. For example, I have separate sections for university assignments, club activities and personal goals. In the past, I often tried to remember everything in my head, so sometimes I forgot important tasks. Since I started using Notion, I can create to-do lists, add notes and set deadlines to remind me, which makes it easier to keep track and complete tasks on time.
+Another reason I enjoy using this app is that I can customize it to suit my needs. Unlike some other apps, Notion allows me to create my own layout, and this makes the app more convenient and enjoyable to use.
+That being said, Notion has a significant impact on my life by helping me study more effectively and manage my time better.`],
+["How does digital technology help you in your work, life and study?",`Currently, I think digital technology plays an essential role in my daily life, especially when it comes to studying and managing my time.
+One major benefit is that it gives me easy access to information. Instead of relying only on textbooks, I can search online, watch educational videos or use AI tools to understand difficult topics. For example, when my group worked on a Macroeconomics project, we used online resources to research economic theories and collect relevant data. This made the process much more convenient and saved us a lot of time.
+Another advantage is that technology also helps me manage my responsibilities. Personally, I use Notion to organise university assignments, set deadlines and keep track of my club activities. This is particularly useful when I have several things to do at the same time.
+Technology also allows me to develop practical skills. For instance, I’ve had opportunities to improve my English and learn basic graphic design and video editing.
+Of course, relying too much on digital technology can affect our concentration. But as long as we use technology wisely, I believe it creates plenty of opportunities for learning and personal growth.`]]},
+{t:"Performance",q:[
+["What might be the advantages and disadvantages of being your own boss?",`I think being your own boss has its good points and some challenges.
+The biggest advantage, in my opinion, is having more freedom and control over your work. When you run a business, you can make your decisions, manage your time and decide what goals you want to achieve. For example, someone who runs an online shop can choose which products to sell, develop marketing strategies and manage everything in the way that suits them. And I think this can be very motivating, especially for people who enjoy taking initiative.
+However, there are also some challenges. Being your own boss means you’re responsible for almost everything, including finances, customers, employees and daily operations. This can create a lot of pressure, particularly when unexpected problems arise. Another disadvantage is that your income may not be stable, especially when the company is new or not performing well.
+Personally, I think it’s a rewarding career choice, but it’s not suitable for everyone. People need self-discipline, good decision-making skills and the ability to deal with uncertainty.`],
+["Do you think people should be rewarded when they do something well?",`Yes, absolutely. I believe that people should be rewarded for their achievements because recognition can have a positive effect on their motivation and working environment.
+The main reason is that when people know their efforts are appreciated, they’re more likely to feel motivated and continue doing their best. For example, imagine an employee who has spent several weeks working on an important project. If their manager recognises their contribution, they will probably feel more valued and encouraged to maintain their performance. On the other hand, if people work hard but never receive any recognition, they may steadily lose momentum.
+I also think rewards can improve teamwork in a working environment. When employees see their colleagues being commended for good performances, they may feel more willing to take initiative and contribute to the team’s success.
+Personally, I think recognising people’s efforts is important and the reward system should always be fair and based on actual achievements.`],
+["What are some ideal ways to reward employees?",`I think companies should offer a combination of financial and non-financial rewards because employees have different needs and motivations.
+First, financial rewards such as bonuses and salary increases are always attractive. They provide employees with direct benefits and show that the company values their contributions.
+However, I don’t think money is everything. Some employees may value their personal time or career development just as much. Companies could offer flexible working hours or opportunities to attend professional training courses. These benefits can help employees maintain a better work-life balance while improving their skills.
+Another effective approach is recognising employees publicly. For instance, managers can praise employees for their achievement during team meetings. This makes them feel appreciated and keep improving.
+Personally, I think companies should understand what their employees actually value instead of offering exactly the same rewards to everyone.`]]},
+{t:"Ethics",q:[
+["How ethical are the brands that you are wearing?",`To be honest, I’m not entirely sure how ethical the brands I’m wearing today are, so I wouldn’t say that they’re all ethical.
+Today, I’m wearing a knitted sweater, a pair of jeans and Crocs sandals. I mainly chose these items because they’re comfortable, practical and suit my personal style. To be fair, I didn’t really think about their ethical reputation when I bought them.
+The main reason for this is that it’s not easy for ordinary consumers to know how clothes are actually produced. For example, we may not know whether the workers who make our clothes receive fair wages or work in safe conditions. As a result, I think clothing companies should be more transparent about their manufacturing processes. This would allow consumers to understand their business practices and make more informed choices.
+Actually, this question has made me realise that I often pay more attention to price and appearance than to the production process. Therefore, in the future, I’d like to research brands more carefully and make more responsible purchasing decisions before buying something.`],
+["Is the main purpose of business to make a profit? If not, what is the main purpose?",`I think making a profit is definitely one of the most important purposes of a business, but it shouldn’t be the only thing companies care about.
+The main reason is that businesses need profit to survive and grow. They have to pay employees, cover operating costs and invest in new products or services. Without enough revenue, even a company with great ideas may struggle to remain competitive.
+However, I believe businesses should also focus on creating value for customers and society. This means providing good-quality products, treating employees fairly and taking responsibility for their environmental impact. For example, a company might invest in eco-friendly production methods; even though they cost more in the short term, it can help reduce pollution and build a better reputation among customers in the long run.
+I also think businesses have responsibilities to different stakeholders, including employees, customers, suppliers and local communities.
+So, in my opinion, profit is essential for business survival, but creating long-term value and contributing positively to society should be equally important.`],
+["Talk about an ethical/unethical company that you know.",`I’d like to talk about Vinamilk, one of Vietnam’s leading dairy companies. I think it’s a good example of a business that has made efforts to combine commercial success with social responsibility.
+I’m familiar with this company because its dairy products are widely available in Vietnam, and I’ve also learned about some of its social responsibility activities.
+One initiative I find particularly meaningful is its School Milk Programme, which provides milk to children, including those from disadvantaged communities. I think this is a positive activity because it shows that a company can contribute to society rather than focus entirely on making profits.
+Besides that, Vinamilk has also invested in modern dairy farms and more sustainable production practices. I believe these efforts are important because large manufacturing businesses can have a significant impact on the environment. By improving production efficiency and reducing their environmental footprint, companies can become more responsible.
+Obviously, what I appreciate most about Vinamilk is that it demonstrates how a Vietnamese company can pursue business growth while also paying attention to social and environmental responsibilities.`],
+["Should a company always be totally honest when advertising?",`Yes, I strongly believe companies should be honest when advertising because customer trust is essential for long-term business success.
+The main reason is that consumers often rely on advertisements when making purchasing decisions. They need accurate information about a product’s quality, features, price and limitations. If companies provide misleading information, customers may end up buying something that doesn’t meet their expectations. For example, a skincare brand shouldn’t claim that its product can completely remove acne within a few days if there isn’t reliable evidence to support that statement. Such claims could mislead customers and create unrealistic expectations.
+Another important point is a company’s reputation. A business might attract more customers through exaggerated advertisements in the short term, but once people discover the truth, they may lose trust in the brand. Nowadays, negative reviews can spread very quickly through social media, so a company’s reputation can be damaged quite easily.
+Personally, I think honesty is not only an ethical responsibility but also a smart long-term business strategy.`]]},
+{t:"Time Management",q:[
+["How do you keep track of what you need to do?",`Personally, I mainly use Notion to keep track of my daily tasks because it allows me to organise different aspects of my life in one place.
+What I like most about this app is that it helps me manage several responsibilities at the same time without forgetting important things. For example, I have separate sections for university assignments, club activities and personal goals. In the past, I often tried to remember everything in my head, so sometimes I forgot important tasks. Since I started using Notion, I can create to-do lists, add notes and set deadlines, so it’s much easier to see what I need to finish and keep track of my responsibilities.
+Another useful feature is its AI assistant. I can simply enter my tasks and deadlines, and it helps me arrange them into a more manageable schedule.
+That being said, having a clear system helps me manage my time more effectively and avoid feeling overwhelmed.`],
+["What are some tips to deal with deadlines?",`I think the best way to deal with deadlines is to plan ahead and avoid leaving everything until the last minute.
+One useful tip is to organise tasks based on their priority. Personally, I find it helpful to write down everything I need to do and decide which tasks are the most urgent. This allows me to focus on important work instead of trying to do everything at once.
+Another thing I’d recommend is breaking large assignments into smaller steps. For example, when my group worked on a Macroeconomics project, we divided the work into researching economic theories, collecting relevant data and preparing the presentation. This made the workload more manageable, and we could easily check our progress along the way.
+I also think setting mini-deadlines is a really useful habit. Rather than waiting until the actual submission date, I try to finish each stage a little earlier so that I have enough time to review my work.
+To be honest, I still procrastinate sometimes, but I’m trying to become more disciplined. Overall, I believe planning ahead, prioritising tasks and starting early are the best ways to handle deadlines effectively.`]]}
+];
+const $=id=>document.getElementById(id);
+let part=1,cur=null,left=60,iv=null,running=false,last=null;
+let currentSpeechText="";
+const speechSupported = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+const secs=()=>part===1?60:120;
+const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+function show(){$("tm").textContent=fmt(left);$("tm").className="t"+(running&&left<=10?" low":"")}
+function reset(){clearInterval(iv);running=false;left=secs();$("go").textContent="Start";$("ans").disabled=true;$("ac").innerHTML="";show()}
+function stopVoice(){
+  if(speechSupported) window.speechSynthesis.cancel();
+  $("stopVoice").disabled=true;
+}
+function speakQuestion(){
+  if(!speechSupported){$("st").textContent="Speech playback is not supported in this browser.";return;}
+  if(!currentSpeechText)return;
+  window.speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(currentSpeechText);
+  const voices=window.speechSynthesis.getVoices();
+  const englishVoices=voices.filter(v=>/^en(-|_)/i.test(v.lang));
+  const preferred=englishVoices.find(v=>/en-GB/i.test(v.lang) && /female|samantha|serena|kate|libby/i.test(v.name))
+    || englishVoices.find(v=>/en-GB/i.test(v.lang))
+    || englishVoices.find(v=>/en-US/i.test(v.lang))
+    || englishVoices[0];
+  if(preferred) utterance.voice=preferred;
+  utterance.lang=preferred?.lang || "en-GB";
+  utterance.rate=0.88;
+  utterance.pitch=1.02;
+  utterance.onstart=()=>{$("stopVoice").disabled=false;$("st").textContent="Playing question…";};
+  utterance.onend=()=>{$("stopVoice").disabled=true;$("st").textContent="Ready.";};
+  utterance.onerror=()=>{$("stopVoice").disabled=true;$("st").textContent="Could not play the voice. Try Listen again.";};
+  window.speechSynthesis.speak(utterance);
+}
+function setPart(n){stopVoice();currentSpeechText="";$("replay").disabled=true;part=n;$("b1").className=n===1?"on":"";$("b2").className=n===2?"on":"";cur=null;$("qc").innerHTML='<div class="hint">Your question will appear here.</div>';$("go").disabled=true;$("st").textContent="";reset()}
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function pick(){
+  reset();
+  if(part===1){const t=rnd(D1);cur={items:t.q};
+    $("qc").innerHTML='<div class="tag">Part 1 · Topic: '+t.t+'</div>'+t.q.map(x=>'<div class="q">• '+x[0]+'</div>').join("");
+  }else{const all=D2.flatMap(t=>t.q.map(x=>({t:t.t,x})));let c;
+    do{c=rnd(all)}while(all.length>1&&last===c.x[0]);last=c.x[0];
+    cur={items:[c.x]};
+    $("qc").innerHTML='<div class="tag">Part 2 · '+c.t+'</div><div class="q">'+c.x[0]+'</div>';}
+  currentSpeechText=cur.items.map(x=>x[0]).join(". ");
+  $("go").disabled=false;$("replay").disabled=!speechSupported;$("st").textContent="Ready.";
+  if(speechSupported) speakQuestion();
+}
+function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator();o.connect(a.destination);o.frequency.value=880;o.start();setTimeout(()=>{o.stop();a.close()},500)}catch(e){}}
+function end(msg){clearInterval(iv);running=false;$("go").textContent="Try again";$("ans").disabled=false;$("st").textContent=msg;show()}
+function toggle(){
+  if(running){end("Practice paused.");return}
+  reset();running=true;$("go").textContent="Finish";$("st").textContent="Time is running.";show();
+  iv=setInterval(()=>{left--;show();if(left<=0){beep();end("Time is up.")}},1000);
+}
+function answer(){
+  if(!cur)return;
+  $("ac").innerHTML='<div class="card"><div class="tag">Sample answer</div>'+cur.items.map(x=>'<div class="ans"><b>'+x[0]+'</b>'+x[1].split("\n").map(p=>"<p>"+p+"</p>").join("")+'</div>').join("")+'</div>';
+  $("ac").scrollIntoView({behavior:"smooth"});
+}
+$("b1").onclick=()=>setPart(1);$("b2").onclick=()=>setPart(2);
+$("rnd").onclick=pick;$("go").onclick=toggle;$("ans").onclick=answer;
+$("replay").onclick=speakQuestion;$("stopVoice").onclick=stopVoice;
+setPart(1);
+</script>
+</body>
+</html>
